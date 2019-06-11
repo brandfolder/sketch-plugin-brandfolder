@@ -1,6 +1,6 @@
 {
   "name": "brandfolder",
-  "version": "1.7.2",
+  "version": "1.7.3",
   "engines": {
     "sketch": ">=3.0"
   },
@@ -30,7 +30,7 @@
     "jwt-decode": "^2.2.0",
     "sketch-module-web-view": "^2.1.7"
   },
-  "description": "_This plugin was created using `skpm`. For a detailed explanation on how things work, checkout the [skpm Readme](https://github.com/skpm/skpm/blob/master/README.md)._",
+  "description": "Easily use your digital assets from Brandfolder right within your favorite platform for digital design!",
   "main": "index.js",
   "keywords": [],
   "author": "",
