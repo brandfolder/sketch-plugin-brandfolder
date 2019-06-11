@@ -38,14 +38,6 @@ const handlers = {
       log(`Selected Attachment to open: ${filename}`)
       log(attachment)
 
-      const ext = getExt(filename)
-
-      // TODO check for invalid file types
-      if (ext == 'sketch'){
-        sketch.UI.message(`Could not load ${filename}. Please make sure it is a supported file type.`)
-        return
-      }
-
       sketch.UI.message(`Placing Attachment: ${filename}`)
 
       const document = sketch.getSelectedDocument()
@@ -54,6 +46,20 @@ const handlers = {
       const selection = document.selectedLayers
       if (!selection.isEmpty) {
         parent = selection.layers[0].parent
+      }
+
+      const ext = getExt(filename)
+
+      if (ext == 'sketch'){
+        sketch.UI.message(`Could not load ${filename}. Please make sure it is a supported file type.`)
+        return
+      } else if (ext == 'svg'){
+        const svgImporter = MSSVGImporter.svgImporter();
+        const svgURL = NSURL.URLWithString(encodeURI(url));
+        svgImporter.prepareToImportFromURL(svgURL);
+        svgImporter.importIntoPage_name_progress(parent.sketchObject, filename, null);
+        sketch.UI.message(`Placed the SVG: ${filename}`)
+        return
       }
 
       const rect = new dom.Rectangle(0, 0, width, height)
