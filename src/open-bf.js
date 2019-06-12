@@ -47,16 +47,19 @@ const handlers = {
       if (!selection.isEmpty) {
         parent = selection.layers[0].parent
       }
+      const imgURL = NSURL.URLWithString(encodeURI(url));
 
       const ext = getExt(filename)
 
       if (ext == 'sketch'){
         sketch.UI.message(`Could not load ${filename}. Please make sure it is a supported file type.`)
         return
+      } else if (ext == 'zip'){
+        sketch.UI.message(`Could not load ${filename}. Please make sure it is a supported file type.`)
+        return
       } else if (ext == 'svg'){
         const svgImporter = MSSVGImporter.svgImporter();
-        const svgURL = NSURL.URLWithString(encodeURI(url));
-        svgImporter.prepareToImportFromURL(svgURL);
+        svgImporter.prepareToImportFromURL(imgURL);
         svgImporter.importIntoPage_name_progress(parent.sketchObject, filename, null);
         sketch.UI.message(`Placed the SVG: ${filename}`)
         return
@@ -64,7 +67,7 @@ const handlers = {
 
       const rect = new dom.Rectangle(0, 0, width, height)
       const imageLayer = new dom.Image({
-        image: NSURL.URLWithString(encodeURI(url)),
+        image: imgURL,
         name: filename,
         frame: rect,
         parent: parent
