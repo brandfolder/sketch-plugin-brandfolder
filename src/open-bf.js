@@ -7,7 +7,7 @@ const BrowserWindow = require('sketch-module-web-view')
 const getExt = (filename) => {
     var idx = filename.lastIndexOf('.')
     // handle cases like, .htaccess, filename
-    return (idx < 1) ? '' : filename.substr(idx + 1).toLowerCase()
+    return (idx < 1) ? '' : filename.substr(idx + 1).toUpperCase()
 }
 
 const handlers = {
@@ -51,13 +51,13 @@ const handlers = {
 
       const ext = getExt(filename)
 
-      if (ext == 'sketch'){
+      if (ext == 'SKETCH'){
         sketch.UI.message(`Could not load ${filename}. Please make sure it is a supported file type.`)
         return
-      } else if (ext == 'zip'){
+      } else if (ext == 'ZIP'){
         sketch.UI.message(`Could not load ${filename}. Please make sure it is a supported file type.`)
         return
-      } else if (ext == 'svg'){
+      } else if (ext == 'SVG'){
         const svgImporter = MSSVGImporter.svgImporter();
         svgImporter.prepareToImportFromURL(imgURL);
         svgImporter.importIntoPage_name_progress(parent.sketchObject, filename, null);
@@ -125,7 +125,7 @@ export const openBrandfolder = (context) => {
   })
 
   // Load the remote URL
-  const url = 'https://integration-panel-ui.brandfolder-svc.com?channel=message&appName=Sketch'
+  const url = 'https://integration-panel-ui.brandfolder-svc.com?channel=message&appName=Sketch&allowedExtensions=jpg,jpeg,svg,tiff,png,ai'
   win.loadURL(url)
 
   win.webContents.on('message', (msg) => {
