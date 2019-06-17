@@ -102,16 +102,38 @@ const handlers = {
 
 const openSketchFile = (attachment) => {
   const { url, filename } = attachment
-  sketch.UI.message(`Loading ${filename}`)
-  // TODO? add to path ${attachment.id} folder?
-  const filepath = `${bf_path}/"${filename}"`
-  const cmdMkdir = `mkdir -p ${bf_path}`
-  runCommand(cmdMkdir)
-  const cmdCurl = `curl ${url} > ${filepath}`
-  runCommand(cmdCurl)
-  sketch.UI.message(`Loaded ${filename}`)
-  const filepath2 = `${bf_path}/${filename}`
-  openDoc(filepath2)
+  sketch.UI.getInputFromUser(
+    `Are you sure you want to open ${filename}? It will be downloaded and saved in your ~/Downloads folder. It will overwrite any existing file with the same name.`,
+    {
+      initialValue: 'Yes',
+      type: sketch.UI.INPUT_TYPE.selection,
+      possibleValues: ['Yes', 'No']
+    },
+    (err, shouldOpen) => {
+      if (err) {
+          // most likely the user canceled the input
+          log(err)
+          return
+      }
+      else {
+        if (shouldOpen == 'Yes'){
+          sketch.UI.message(`Loading ${filename}`)
+          // TODO? add to path ${attachment.id} folder?
+          const filepath = `${bf_path}/"${filename}"`
+          const cmdMkdir = `mkdir -p ${bf_path}`
+          runCommand(cmdMkdir)
+          const cmdCurl = `curl ${url} > ${filepath}`
+          runCommand(cmdCurl)
+          sketch.UI.message(`Loaded ${filename}`)
+          const filepath2 = `${bf_path}/${filename}`
+          openDoc(filepath2)
+        }
+        else {
+          sketch.UI.message(`Not opening ${filename}`)
+        }
+      }
+    }
+  )
 }
 
 function runCommand(command) {
