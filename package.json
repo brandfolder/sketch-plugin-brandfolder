@@ -33,7 +33,7 @@
   "description": "Speed up your design workflow by accessing your Brandfolder asset library right from Sketch",
   "main": "index.js",
   "keywords": [],
-  "author": "Kevin Schwindt (Brandfolder)",
+  "author": "Brandfolder",
   "license": "ISC",
   "repository": {
     "type": "git",
