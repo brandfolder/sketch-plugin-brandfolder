@@ -30,7 +30,7 @@
     "jwt-decode": "^2.2.0",
     "sketch-module-web-view": "^2.1.7"
   },
-  "description": "Easily use your digital assets from Brandfolder right within your favorite platform for digital design!",
+  "description": "Speed up your design workflow by accessing your Brandfolder asset library right from Sketch",
   "main": "index.js",
   "keywords": [],
   "author": "",
