@@ -3,6 +3,9 @@ var Settings = require('sketch/settings')
 const dom = require('sketch/dom')
 const BrowserWindow = require('sketch-module-web-view')
 
+// documentation: https://developer.sketchapp.com/reference/api/
+
+const bf_path = '~/Downloads'
 
 const getExt = (filename) => {
     var idx = filename.lastIndexOf('.')
@@ -52,7 +55,8 @@ const handlers = {
       const ext = getExt(filename)
 
       if (ext == 'SKETCH'){
-        sketch.UI.message(`Could not load ${filename}. Please make sure it is a supported file type.`)
+        sketch.UI.message(`Trying to load ${filename}.`)
+        openSketchFile(attachment)
         return
       } else if (ext == 'ZIP'){
         sketch.UI.message(`Could not load ${filename}. Please make sure it is a supported file type.`)
@@ -96,6 +100,45 @@ const handlers = {
   },
 }
 
+const openSketchFile = (attachment) => {
+  const { url, filename } = attachment
+  sketch.UI.message(`Loading ${filename}`)
+  // TODO? add to path ${attachment.id} folder?
+  const filepath = `${bf_path}/"${filename}"`
+  const cmdMkdir = `mkdir -p ${bf_path}`
+  runCommand(cmdMkdir)
+  const cmdCurl = `curl ${url} > ${filepath}`
+  runCommand(cmdCurl)
+  sketch.UI.message(`Loaded ${filename}`)
+  const filepath2 = `${bf_path}/${filename}`
+  openDoc(filepath2)
+}
+
+function runCommand(command) {
+  log(`cmd: ${command}`)
+  const args = ['-l', '-c', command]
+  const task = NSTask.alloc().init();
+  task.setLaunchPath_('/bin/bash');
+  task.arguments = args;
+  task.launch();
+  task.waitUntilExit();
+  return (task.terminationStatus() == 0)
+}
+
+function openDoc(filepath){
+  dom.Document.open(filepath, (err, document) => {
+    if (err) {
+      log(err)
+      sketch.UI.message('Error getting the Sketch file from Brandfolder.')
+      return
+    }
+    else {
+      sketch.UI.message('Pulled latest version from Brandfolder and saved it in Downloads.')
+    }
+  })
+}
+
+
 export const openBrandfolder = (context) => {
   let win = BrowserWindow.fromId('open-bf')
   if (win) {
@@ -125,7 +168,7 @@ export const openBrandfolder = (context) => {
   })
 
   // Load the remote URL
-  const url = 'https://integration-panel-ui.brandfolder-svc.com?channel=message&appName=Sketch&allowedExtensions=jpg,jpeg,svg,tiff,png,ai'
+  const url = 'https://integration-panel-ui.brandfolder-svc.com?channel=message&appName=Sketch&allowedExtensions=jpg,jpeg,svg,tiff,png,ai&openableExtensions=sketch'
   win.loadURL(url)
 
   win.webContents.on('message', (msg) => {
