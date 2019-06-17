@@ -21,3 +21,6 @@
 - Click `Place` on an asset to place it into your current Sketch artboard.
   - If an asset has multiple attachments, click on the `# Attachments` button to view them all.
   - Then click `Place` on the attachment you wish to use.
+
+## Short Video Demonstration
+https://brandfolder.com/s/pt984f-54pr7c-fxd0f2
