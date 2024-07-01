@@ -19,8 +19,8 @@
     "postinstall": "npm run build && skpm-link"
   },
   "devDependencies": {
-    "@babel/plugin-transform-runtime": "^7.3.4",
-    "@skpm/builder": "^0.5.11",
+    "@babel/plugin-transform-runtime": "^7.24.7",
+    "@skpm/builder": "^0.9.5",
     "babel-polyfill": "^6.26.0"
   },
   "dependencies": {
