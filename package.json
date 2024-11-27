@@ -38,5 +38,8 @@
   "repository": {
     "type": "git",
     "url": "git@github.com:brandfolder/sketch-plugin-brandfolder.git"
+  },
+  "volta": {
+    "node": "20.15.1"
   }
 }
