@@ -44,6 +44,15 @@
     "@babel/helpers": "^7.26.10",
     "pbkdf2": "^3.1.3",
     "cipher-base": "^1.0.5",
-    "sha.js": "^2.4.12"
+    "sha.js": "^2.4.12",
+    "json5": "^2.2.3",
+    "tar": "^7.5.11",
+    "minimatch": "^3.1.5",
+    "lodash": "^4.18.0",
+    "serialize-javascript": "^7.0.5",
+    "micromatch": "^4.0.8",
+    "chokidar": {
+      "braces": "^3.0.3"
+    }
   }
 }
